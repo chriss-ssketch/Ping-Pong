@@ -1,6 +1,11 @@
 from pygame import *
 
+
 init()
+
+
+font.init()
+lose_text = font.Font(None, 70)
 
 #gamesprite class
 class GameSprite(sprite.Sprite):
@@ -134,14 +139,35 @@ while game:
         speed_y *= -1
 
     #left padle
-    if sprite.collide_rect(ball, paddle1):
+    if sprite.collide_rect(ball, paddle1) or sprite.collide_rect(ball, paddle2):
+        speed_x *= -1
 
-        speed_x = abs(speed_x)
 
-   #right padd;el
-    if sprite.collide_rect(ball, paddle2):
 
-        speed_x = -abs(speed_x)
+
+
+    #lose condition 
+    if ball.rect.left < 0:
+
+            text = lose_text.render(
+                "left player lost!!",
+                True,
+                (255, 0, 0)
+            )
+
+            window.blit(text, (120, 220))
+
+            finish = True
+
+    if ball.rect.right >= window_width:
+
+            text = lose_text.render(
+                "right player lost!1!",
+                True,
+                (255, 0, 0)
+            )
+            window.blit(text, (120, 220))
+
 
 
  #object reset
